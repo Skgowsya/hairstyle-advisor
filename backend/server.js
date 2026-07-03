@@ -115,15 +115,19 @@ app.post("/generate-preview", (req, res) => {
    // res.json({
      app.post("/analyze", async (req, res) => {
   try {
-    const { image,faceShape , category } = req.body;
+    const { image,faceShape, category} = req.body;
 
+    console.log(req.body);
     console.log("Received faceShape:", faceShape);
     console.log("Category is : ",category);
+    
+
 
 let recommendation = "";
 let reason = "";
 
-if(category === "Women"){
+if (category === "Women") {
+
   if (faceShape === "Oval") {
     recommendation = "Bob Cut";
     reason = "Oval faces suit almost every hairstyle beautifully.";
@@ -141,25 +145,26 @@ if(category === "Women"){
     reason = "Highlights cheekbones and balances facial proportions.";
   }
 
-} else {
-  if (faceShape === "Oval") {
-  recommendation = "Fade Cut";
-  reason = "Oval faces have balanced proportions and suit most hairstyles.";
-} else if (faceShape === "Round") {
-  recommendation = "Pompadour";
-  reason = "Adds height and makes the face appear longer.";
-} else if (faceShape === "Square") {
-  recommendation = "Crew Cut";
-  reason = "Works well with strong jawlines.";
-} else if (faceShape === "Heart") {
-  recommendation = "French Crop";
-  reason = "Balances a wider forehead.";
-} else if (faceShape === "Diamond") {
-  recommendation = "Under Cut";
-  reason = "Adds width and balances cheekbones.";
-}
-}
+} else if (category === "Men") {
 
+  if (faceShape === "Oval") {
+    recommendation = "Fade Cut";
+    reason = "Oval faces have balanced proportions and suit most hairstyles.";
+  } else if (faceShape === "Round") {
+    recommendation = "Pompadour";
+    reason = "Adds height and makes the face appear longer.";
+  } else if (faceShape === "Square") {
+    recommendation = "Crew Cut";
+    reason = "Works well with strong jawlines.";
+  } else if (faceShape === "Heart") {
+    recommendation = "French Crop";
+    reason = "Balances a wider forehead.";
+  } else if (faceShape === "Diamond") {
+    recommendation = "Under Cut";
+    reason = "Adds width and balances cheekbones.";
+  }
+
+}
 
 
 res.json({
