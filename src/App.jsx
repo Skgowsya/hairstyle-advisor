@@ -141,7 +141,7 @@ return;
 setLoading(true);
 
 try {
-  const response = await axios.post("https://hairstyle-backend-he65.onrender.com");
+  const response = await axios.post("https://hairstyle-backend-he65.onrender.com/generate-preview");
   const data = await response.data;
 
   if (data.success) {
