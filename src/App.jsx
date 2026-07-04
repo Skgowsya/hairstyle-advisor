@@ -43,8 +43,10 @@ const [detectedFaceShape,setDetectedFaceShape]=useState("");
 const [compareStyle1,setCompareStyle1]=useState("");
 const [compareStyle2,setCompareStyle2]=useState("");
 const [confidence, setConfidence] = useState("");
+const [modelsLoaded,setModelsLoaded]=useState(false);
 const [result, setResult] = useState(null);
 const imageRef=useRef(null);
+
 
 
 const hairstyles = [
@@ -238,8 +240,8 @@ useEffect(()=>{
 useEffect(() => {
   const loadModels = async () => {
     try {
-      await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
-      await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
+      await faceapi.nets.tinyFaceDetector.loadFromUri(`${import.meta.env.BASE_URL}models`);
+await faceapi.nets.faceLandmark68Net.loadFromUri(`${import.meta.env.BASE_URL}models`);
       console.log("Models loaded");
     } catch (err) {
       console.error("Model loading error:", err);
@@ -248,6 +250,12 @@ useEffect(() => {
 
   loadModels();
 }, []);
+
+
+
+useEffect(() => {
+  console.log("Category changed to:", category);
+}, [category]);
 
 
 
@@ -278,7 +286,12 @@ setConfidence(randomConfidence);
   await analyzeWithAI(preview,result);
 };
 
+
 const detectFaceShape = async (img) => {
+  if(!faceapi.nets.tinyFaceDetector.isLoaded){
+    console.log("Tiny face detector model is not working");
+    return;
+  }
   const detection = await faceapi
     .detectSingleFace(
       img,
@@ -354,36 +367,6 @@ return "Round";
 
 
 
-const analyzeWithAI = async (imageBase64, detectedFaceShape) => {
-  try {
-    setLoading(true);
-
-    const response = await fetch("http://localhost:5000/analyze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        image: imageBase64,
-        faceShape: detectedFaceShape,
-        category: category,
-      }),
-    });
-
-    const data = await response.json();
-    
-
-    console.log("AI RESULT:", data);
-    
-  console.log("category stage : ",category);
-
-    setResult(data);
-  } catch (error) {
-    console.log("ERROR:", error);
-  } finally {
-    setLoading(false);
-  }
-};
 
 const filteredStyles = hairstyles
   .filter((style) => style.category === category)
@@ -453,7 +436,7 @@ const menRecommendations={
 };
 
 const womenRecommendations={
-  Round:["Longlayers Cut","Curtainbags Cut","Butterfly cut"],
+  Round:["Longlayers Cut","Curtainbags Cut","Butterfly Cut"],
   Oval:["Bob Cut","Butterfly Cut","Longlayers Cut"],
   Square:["Wolf Cut","Longlayers Cut","Curtainbags Cut"],
   Heart:["Bob Cut","Butterfly Cut"],
@@ -527,35 +510,7 @@ const getTopRecommendations=()=>{
   }
 };
 
-const analyzeFaceShape = async () => {
-  console.log("Button clicked")
-  try {
-    const response = await fetch(
-      "http://localhost:5000/analyze",
-      {
-        method: "POST",
-        headers:{
-        "Content-Type":"application/json"
-        },
-        body:JSON.stringify({faceShape:faceShape}) 
-      }
-  );
-    const data = await response.json();
-    console.log("Responce data : ",data);
-    setDetectedFaceShape(data.faceShape);
-    setFaceShape(data.faceShape);
-    setConfidence(data.confidence);
-  setDetectionHistory((prev) => [
-    ...prev,
-  {
-    shape: faceShape,
-    confidence: 95,
-  },
-  ]);
-} catch(error){
-  console.log(error);
-}
-};
+
 
 const buttonStyle = {
   backgroundColor: "#2563eb",
@@ -613,6 +568,40 @@ const downloadBarberInstructions=()=>{
 
   URL.revokeObjectURL(url);
 };
+
+const analyzeWithAI = async (imageBase64, detectedFaceShape) => {
+  console.log("Category inside analyzeWithAI:", category);
+
+  try {
+    setLoading(true);
+
+    const response = await fetch("http://localhost:5000/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        image: imageBase64,
+        faceShape: detectedFaceShape,
+        category: category,
+      }),
+    });
+
+    const data = await response.json();
+    
+
+    console.log("AI RESULT:", data);
+    
+  console.log("category stage : ",category);
+
+    setResult(data);
+  } catch (error) {
+    console.log("ERROR:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 return (
 <div
@@ -886,11 +875,7 @@ style={ buttonStyle }
 </h3>
 
 
-<button onClick={analyzeFaceShape}
-style={ buttonStyle }
->
-  Analyze Face Shape 
-</button>
+
 
 <br/>
 <br/>
@@ -1038,6 +1023,8 @@ Confidence :
      >
       <img 
       src={styleData?.image}
+      onLoad={()=> console.log("Loaded : ",styleData?.image)}
+      onError={()=>console.log("Failed : ",styleData?.image)}
       alt={item}
       width="150"
       height="150"
