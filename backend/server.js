@@ -77,7 +77,7 @@ app.post("/generate-preview", (req, res) => {
   res.json({
     success: true,
     message: "Preview generated successfully!",
-    imageUrl: `http://localhost:5000/uploads/${latestFile}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/uploads/${latestFile}`,
   });
 });
 
@@ -193,10 +193,10 @@ res.json({
   }
 }); 
   
-
-
-
 /* ---------------- START SERVER ---------------- */
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
