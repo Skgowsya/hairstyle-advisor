@@ -63,17 +63,27 @@ app.post("/upload", upload.single("image"), (req, res) => {
 
 /* ---------------- PREVIEW ---------------- */
 app.post("/generate-preview", (req, res) => {
+  console.log("===== GENERATE PREVIEW CALLED =====");
+
   try {
+    console.log("Checking uploads folder...");
+
     if (!fs.existsSync("uploads")) {
-      return res.status(404).json({
+      console.log("Uploads folder does not exist!");
+
+      return res.status(500).json({
         success: false,
-        message: "Uploads folder not found",
+        message: "Uploads folder missing",
       });
     }
 
     const files = fs.readdirSync("uploads");
 
+    console.log("Files:", files);
+
     if (files.length === 0) {
+      console.log("No files found.");
+
       return res.json({
         success: false,
         message: "No uploaded image found",
@@ -82,11 +92,14 @@ app.post("/generate-preview", (req, res) => {
 
     const latestFile = files[files.length - 1];
 
+    console.log("Latest file:", latestFile);
+
     res.json({
       success: true,
       message: "Preview generated successfully!",
       imageUrl: `${req.protocol}://${req.get("host")}/uploads/${latestFile}`,
     });
+
   } catch (err) {
     console.error("Generate Preview Error:", err);
 
