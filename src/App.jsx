@@ -66,6 +66,13 @@ const hairstyles = [
 
 ];
 
+const API_URL =
+  import.meta.env.DEV
+    ? "http://localhost:5000"
+    : "https://hairstyle-backend-he65.onrender.com";
+
+
+
 const [favorites,setFavorites]=useState(()=>{
   const saved = localStorage.getItem("favorites");
   return saved ? JSON.parse(saved) : [];
@@ -90,6 +97,8 @@ if(selectedFile){
 
 };
 
+
+
 const uploadImage = async () => {
 if (!file) {
 setMessage("Please select an image");
@@ -106,7 +115,7 @@ formData.append("image", file);
 formData.append("hairstyle", hairstyle);
 
 try {
-  const response = await fetch("/upload", {
+  const response = await fetch(`${API_URL}/upload`, {
     method: "POST",
     body: formData,
   });
@@ -132,41 +141,43 @@ try {
 
 
 const generatePreview = async () => {
-if (!file || !hairstyle) {
-
-setPreviewMessage("Please upload a photo and select an hairstyle");
-return;
-}
-
-setLoading(true);
-
-try {
-  const response = await axios.post("https://hairstyle-backend-he65.onrender.com/generate-preview");
-  const data = await response.data;
-
-  if (data.success) {
-    setGeneratedStyle(hairstyle);
-
-    setPreviewMessage(data.message);
-    setMessage(
-      `Uplaoded successful! hairstyle : ${hairstyle}`
+  if (!file || !hairstyle) {
+    setPreviewMessage(
+      "Please upload a photo and select a hairstyle"
     );
-    setHistory((prev) => [
-  ...prev,
-  {
-    hairstyle: hairstyle,
-    filename: data.filename,
-  },
-]);
-}
+    return;
+  }
 
-} catch (error) {
-  console.error(error);
-  setPreviewMessage("Preview generation failed");
-}
+  setLoading(true);
 
-setLoading(false);
+  try {
+    const response = await axios.post(`${API_URL}/generate-preview`);
 
+    const data = response.data;
+
+    if (data.success) {
+      setGeneratedStyle(hairstyle);
+      setPreviewMessage(data.message);
+      setMessage(
+        `Uploaded successful! Hairstyle: ${hairstyle}`
+      );
+
+      setHistory((prev) => [
+        ...prev,
+        {
+          hairstyle,
+          filename: data.filename,
+        },
+      ]);
+    } else {
+      setPreviewMessage(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    setPreviewMessage("Preview generation failed");
+  }
+
+  setLoading(false);
 };
 
 
@@ -574,7 +585,7 @@ const analyzeWithAI = async (imageBase64, detectedFaceShape) => {
   try {
     setLoading(true);
 
-    const response = await fetch("https://hairstyle-backend-he65.onrender.com/analyze", {
+    const response = await fetch(`${API_URL}/analyze`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

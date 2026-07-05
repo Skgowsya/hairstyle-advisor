@@ -63,56 +63,43 @@ app.post("/upload", upload.single("image"), (req, res) => {
 
 /* ---------------- PREVIEW ---------------- */
 app.post("/generate-preview", (req, res) => {
-  const files = fs.readdirSync("uploads");
+  try {
+    if (!fs.existsSync("uploads")) {
+      return res.status(404).json({
+        success: false,
+        message: "Uploads folder not found",
+      });
+    }
 
-  if (files.length === 0) {
-    return res.json({
+    const files = fs.readdirSync("uploads");
+
+    if (files.length === 0) {
+      return res.json({
+        success: false,
+        message: "No uploaded image found",
+      });
+    }
+
+    const latestFile = files[files.length - 1];
+
+    res.json({
+      success: true,
+      message: "Preview generated successfully!",
+      imageUrl: `${req.protocol}://${req.get("host")}/uploads/${latestFile}`,
+    });
+  } catch (err) {
+    console.error("Generate Preview Error:", err);
+
+    res.status(500).json({
       success: false,
-      message: "No uploaded image found",
+      error: err.message,
     });
   }
-
-  const latestFile = files[files.length - 1];
-
-  res.json({
-    success: true,
-    message: "Preview generated successfully!",
-    imageUrl: `${req.protocol}://${req.get("host")}/uploads/${latestFile}`,
-  });
 });
 
-/* ---------------- 🔥 AI ANALYSIS (UPGRADED) ---------------- */
-//app.post("/analyze", async (req, res) => {
-  //try {
-    //const { faceShape, image } = req.body;
 
-    //console.log("Received faceShape:", faceShape);
 
-    /* ---------------- LOCAL RESULT ---------------- */
-    //const localResult = {
-      //faceShape: faceShape || "unknown",
-      //confidence: 95,
-    //};
-
-    /* ---------------- HUGGING FACE AI ---------------- */
-    //let hfResult = null;
-    //if(image){
-    //const response = await axios.post(
-     // "https://api-inference.huggingface.co/models/google/vit-base-patch-224",
-      //{
-       // input:image
-      //},
-      //{
-        //headers:{
-          //Authorization:`Bearer ${process.env.HF_TOKEN}`,
-        //},
-      //}
-    //)
-  //hfResult = response.data;
-//}
-
-    /* ---------------- FINAL COMBINED OUTPUT ---------------- */
-   // res.json({
+    
      app.post("/analyze", async (req, res) => {
   try {
     const { image,faceShape, category} = req.body;
