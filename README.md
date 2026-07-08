@@ -1,16 +1,36 @@
-# React + Vite
+# AI Hairstyle Advisor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+AI Hairstyle Advisor is a React-based web application that helps users explore different hairstyles by uploading a photo and previewing hairstyle recommendations.
 
-Currently, two official plugins are available:
+## Features
+- Upload an image
+- Preview different hairstyles
+- Download the generated preview
+- Responsive user interface
+- Backend API integration
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Technologies Used
+- React
+- Vite
+- JavaScript
+- Node.js
+- Express.js
+- HTML
+- CSS
 
-## React Compiler
+## Installation
+1.Clone the repository
+2.Install dependencies:
+npm install
+3.Start the frontend
+npm run dev
+4.Start the backend
+noed server.js
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Future Improvements
+- Improving the Face Detection
+- Generating the total image with the hairstyle on the Userface by using the AI
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Author
+Sk Gowsya
