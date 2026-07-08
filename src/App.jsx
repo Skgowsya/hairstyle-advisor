@@ -141,6 +141,7 @@ try {
 
 
 const generatePreview = async () => {
+  console.log("Generate Preview button clicked");
   if (!file || !hairstyle) {
     setPreviewMessage(
       "Please upload a photo and select a hairstyle"
@@ -725,30 +726,7 @@ setActiveTab("history")}>
     and discover hairstyles that suit you best.
   </p>
 
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      gap: "20px",
-      flexWrap: "wrap",
-      marginTop: "15px",
-    }}
-  >
-    <div>
-      <h3>{history.length}</h3>
-      <p>Uploads</p>
-    </div>
-
-    <div>
-      <h3>{favorites.length}</h3>
-      <p>Favorites</p>
-    </div>
-
-    <div>
-      <h3>{detectionHistory.length}</h3>
-      <p>Detections</p>
-    </div>
-  </div>
+  
 </div>
 
 {activeTab === "upload" && (
