@@ -657,56 +657,126 @@ Find your perfect hairstyle using AI
     display: "flex",
     justifyContent: "center",
     gap: "15px",
+    
     marginBottom: "25px",
     flexWrap: "wrap",
   }}
 >
   
   <button onClick={()=>
-    setActiveTab("upload")}>
-
-    📸 Upload
+    setActiveTab("upload")}
+    style={{
+    padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+    }}
+    >
+    <p>📸 Upload</p>
   
   </button>
 <button onClick={()=>
-  setActiveTab("detect")}>
 
-    🎯 Detect
+
+  setActiveTab("detect")}
+  style={{
+    padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+  }}
+  >
+    <p>🎯 Detect </p>
 
 </button>
 
 <button onClick={()=>
-  setActiveTab("styles")}>
+  setActiveTab("styles")}
+  style={{
+    padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+  }}>
   
-    💇 Styles
+    <p>💇 Styles</p>
 
   </button>
 
   <button onClick={()=>
-    setActiveTab("preview")
-  }>
-    ✨ Preview
+    setActiveTab("preview")}
+    style={{
+      padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+    }}
+  >
+    <p>✨ Preview</p>
   </button>
 
   <button onClick={()=>
-    setActiveTab("favorites")}>
+    setActiveTab("favorites")}
+    style={{
+      padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"16px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+    }}
+    >
     
-    ❤️ Favorites
+    <p>❤️ Favorites </p>
   </button>
 
   <button onClick={()=>
     setActiveTab("ai analysis")
-  }>
-      🤖 AI Analysis
+  }
+  style={{
+    padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"16px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+  }}>
+      <p>🤖 AI Analysis </p>
   </button>
 
   <button onClick={()=>
-setActiveTab("history")}>
+setActiveTab("history")}
+style={{
+  padding:"12px 25px",
+        fontSize:"16px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"#2563eb",
+        color:"white",
+}}
+>
 
-  📜 History
+  <p>📜 History</p>
 
 </button>
 </div>
+<br/>
+
 
 <div
   style={{
@@ -717,6 +787,7 @@ setActiveTab("history")}>
     boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
   }}
 >
+  
   <h2 style={{ color: "#2563eb" }}>
     Welcome to Hairstyle Advisor
   </h2>
