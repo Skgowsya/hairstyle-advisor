@@ -860,7 +860,23 @@ style={{
   }}
 >
   📤 Upload Photo
+  
 </button>
+<br/>
+<br/>
+
+<div
+style={{
+  padding:"12px 25px",
+        fontSize:"18px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        backgroundColor:"",
+        color:"black",
+}}>Please Click the above Upload photo button 
+   for efficient result
+</div>
 
 </>
 )}
@@ -922,19 +938,32 @@ style={ buttonStyle }
 >
   Auto Detect Face
  </button>
+<br/>
 
- <h3
+<br/>
+
+ <div
  style={{
-  padding: "10px",
-    borderRadius: "5px",
-    marginBottom: "20px",
+ padding:"12px 25px",
+        fontSize:"18px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
  }}
  >
-<p>Detected Face is : <b>{faceShape}</b></p>
-</h3>
-
-
-
+<p
+style={{
+  padding:"12px 25px",
+        fontSize:"18px",
+        borderRadius:"10px",
+        border:"none",
+        cursor:"pointer",
+        color:"white",
+        backgroundColor:"#2563eb",
+}}
+>
+Detected Face is : {faceShape}</p>
+</div>
 
 <br/>
 <br/>
@@ -1130,6 +1159,8 @@ style={{
   borderRadius:"15px",
   marginTop: "20px",
   boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
+  
+
 }}
 >
 
@@ -1232,26 +1263,52 @@ style={{
   padding:"20px",
   borderRadius:"15px",
   marginTop:"20px",
+  backgroundColor:"#2563eb", 
 }}
 >
   <h2> ⚖️ Compare Hairstyles </h2>
+  
+  <div
+  style={{
     
+    display:"flex",
+    justifyContent:"center",
+    gap:"10px",
+  }}
+   > 
   <select 
   value={compareStyle1}
   onChange={(e)=>
     setCompareStyle1(e.target.value)}
+style={{
+    padding:"10px 23px",
+        fontSize:"15px",
+        borderRadius:"8px",
+        border:"none",
+        cursor:"pointer",
+    }}
     >
       <option value="">Select Style 1</option>
+      
       {hairstyles.map((style)=>(
         <option key={style.name} value={style.name}>
           {style.name}
         </option>
+        
       ))}
     </select>
+    
     <select
     value={compareStyle2}
     onChange={(e)=>
       setCompareStyle2(e.target.value)}
+      style={{
+    padding:"10px 23px",
+        fontSize:"15px",
+        borderRadius:"8px",
+        border:"none",
+        cursor:"pointer",
+    }}
       >
         <option value="">Select Style 2</option>
         {hairstyles.map((style)=>(
@@ -1260,6 +1317,7 @@ style={{
         </option>
         ))}
       </select>
+      </div>
     
    {compareStyle1 && compareStyle2 && (
   <div
@@ -1692,7 +1750,6 @@ style={buttonStyle}
 
 {activeTab === "favorites" && (
   <>
-
 
 <div 
 style={{
