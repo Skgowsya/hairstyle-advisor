@@ -23,10 +23,10 @@ AI Hairstyle Advisor is a React-based web application that helps users explore d
 1.Clone the repository
 2.Install dependencies:
 npm install
-3.Start the frontend
+3.Start the frontend:
 npm run dev
-4.Start the backend
-noed server.js
+4.Start the backend:
+node server.js
 
 ## Future Improvements
 - Improving the Face Detection
