@@ -1154,7 +1154,7 @@ Confidence :
 
       <div
 style={{
-  backgroundColor:"white",
+  backgroundColor:"#2563eb",
   padding:"20px",
   borderRadius:"15px",
   marginTop: "20px",
